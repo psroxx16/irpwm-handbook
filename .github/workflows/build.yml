@@ -15,16 +15,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # First upload is a single zip (the GitHub web uploader flattens folders). Unpack it into the repo once.
+  # The web uploader flattens folders, so the app source arrives as one zip. Unpack it into the repo (replacing the previous version).
   unpack:
     runs-on: ubuntu-latest
     outputs:
       sha: ${{ steps.done.outputs.sha }}
     steps:
       - uses: actions/checkout@v4
-      - name: Unpack app-source.zip (first run only)
+      - name: Unpack app-source.zip
         run: |
           if [ -f app-source.zip ]; then
+            git rm -r -q --ignore-unmatch www electron assets build android-signing make.py src-install.html capacitor.config.json package.json
             unzip -o -q app-source.zip
             git rm -q app-source.zip
             git config user.name "github-actions[bot]"
@@ -65,17 +66,17 @@ jobs:
       - name: Create Android project
         run: |
           npx cap add android
-          npx capacitor-assets generate --android --iconBackgroundColor '#F2C02E' --iconBackgroundColorDark '#F2C02E' --splashBackgroundColor '#17212B' --splashBackgroundColorDark '#17212B'
-          sed -i 's/#3F51B5/#17212B/g; s/#303F9F/#17212B/g; s/#FF4081/#F2C02E/g' android/app/src/main/res/values/colors.xml || true
-          sed -i 's/versionName "1.0"/versionName "1.0.${{ github.run_number }}"/; s/versionCode 1$/versionCode ${{ github.run_number }}/' android/app/build.gradle
+          npx capacitor-assets generate --android --iconBackgroundColor '#102542' --iconBackgroundColorDark '#102542' --splashBackgroundColor '#102542' --splashBackgroundColorDark '#102542'
+          sed -i 's/#3F51B5/#102542/g; s/#303F9F/#102542/g; s/#FF4081/#B98A3E/g' android/app/src/main/res/values/colors.xml || true
+          sed -i 's/versionName "1.0"/versionName "2.0.${{ github.run_number }}"/; s/versionCode 1$/versionCode ${{ github.run_number }}/' android/app/build.gradle
           npx cap sync android
-      - name: Build APK (signed with the repo's fixed debug key so updates install over the old version)
+      - name: Build APK
         run: |
           mkdir -p ~/.android && cp android-signing/debug.keystore ~/.android/debug.keystore
           cd android && chmod +x gradlew && ./gradlew --no-daemon assembleDebug
-          cp app/build/outputs/apk/debug/app-debug.apk ../IRPWM-Handbook.apk
+          cp app/build/outputs/apk/debug/app-debug.apk ../IRPWM-Android.apk
       - uses: actions/upload-artifact@v4
-        with: { name: android, path: IRPWM-Handbook.apk }
+        with: { name: android, path: IRPWM-Android.apk }
 
   windows:
     needs: unpack
@@ -92,24 +93,26 @@ jobs:
         with:
           name: windows
           path: |
-            dist/IRPWM-Handbook-Setup.exe
-            dist/IRPWM-Handbook-Portable.exe
+            dist/IRPWM-Windows-Setup.exe
+            dist/IRPWM-Windows-Portable.exe
 
   release:
     needs: [unpack, android, windows]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
-        with: { path: out, merge-multiple: true }
+        with: { name: android, path: out }
+      - uses: actions/download-artifact@v4
+        with: { name: windows, path: out }
       - uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.${{ github.run_number }}
-          name: IRPWM Handbook v1.0.${{ github.run_number }}
+          tag_name: v2.0.${{ github.run_number }}
+          name: IRPWM v2.0.${{ github.run_number }} — Indian Railways Permanent Way Manual
           target_commitish: ${{ needs.unpack.outputs.sha }}
           make_latest: true
           body: |
-            IRPWM Handbook (IRPWM 2024 reprint, corrected up to ACS-16).
-            - **Android:** IRPWM-Handbook.apk — open it on the phone and allow "Install unknown apps".
-            - **Windows:** IRPWM-Handbook-Setup.exe (installer) or IRPWM-Handbook-Portable.exe (no install). SmartScreen: More info → Run anyway.
-            - **iPhone/iPad:** open the web app in Safari → Share → Add to Home Screen.
+            Indian Railways Permanent Way Manual, 2024 reprint incorporating Advance Correction Slips up to No. 16. Complete text, annexures, correction-slip register, search and bookmarks. Works offline.
+            - **Android:** IRPWM-Android.apk. Open it on the phone and allow "Install unknown apps". Installs over the earlier version.
+            - **Windows:** IRPWM-Windows-Setup.exe (installer) or IRPWM-Windows-Portable.exe (no installation). If SmartScreen appears: More info, then Run anyway.
+            - **iPhone / iPad:** open the web app in Safari, then Share, then Add to Home Screen.
           files: out/*
