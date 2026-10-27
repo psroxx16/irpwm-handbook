@@ -1,17 +1,17 @@
 {
-  "name": "IRPWM Handbook",
+  "name": "IRPWM \u2014 Indian Railways Permanent Way Manual",
   "short_name": "IRPWM",
-  "description": "Plain-language handbook of the Indian Railways Permanent Way Manual (2024 reprint, corrected up to ACS-16), with calculators and quizzes. Works offline.",
+  "description": "Indian Railways Permanent Way Manual, 2024 reprint incorporating ACS up to No. 16. Complete text, annexures, search, bookmarks. Works offline.",
   "id": "./",
-  "start_url": "./#home",
+  "start_url": "./#/",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#17212B",
-  "theme_color": "#17212B",
+  "background_color": "#102542",
+  "theme_color": "#102542",
   "lang": "en",
   "categories": [
-    "education",
     "reference",
+    "education",
     "productivity"
   ],
   "icons": [
@@ -36,8 +36,8 @@
   ],
   "shortcuts": [
     {
-      "name": "Calculators",
-      "url": "./#tools",
+      "name": "Contents",
+      "url": "./#/contents",
       "icons": [
         {
           "src": "icons/icon-192.png",
@@ -46,8 +46,8 @@
       ]
     },
     {
-      "name": "Key values",
-      "url": "./#ref",
+      "name": "Search",
+      "url": "./#/search",
       "icons": [
         {
           "src": "icons/icon-192.png",
@@ -56,8 +56,8 @@
       ]
     },
     {
-      "name": "Quiz",
-      "url": "./#quiz",
+      "name": "Annexures",
+      "url": "./#/annexures",
       "icons": [
         {
           "src": "icons/icon-192.png",

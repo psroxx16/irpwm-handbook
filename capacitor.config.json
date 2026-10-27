@@ -1,8 +1,8 @@
 {
   "appId": "in.irpwm.handbook",
-  "appName": "IRPWM Handbook",
+  "appName": "IRPWM",
   "webDir": "www",
-  "backgroundColor": "#17212B",
+  "backgroundColor": "#102542",
   "android": {
     "adjustMarginsForEdgeToEdge": "force",
     "allowMixedContent": false

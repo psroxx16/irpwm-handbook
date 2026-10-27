@@ -1,20 +1,19 @@
 {
-  "name": "irpwm-handbook",
-  "productName": "IRPWM Handbook",
-  "version": "1.0.0",
-  "description": "Plain-language handbook of the Indian Railways Permanent Way Manual (2024 reprint, corrected up to ACS-16)",
-  "author": "IRPWM Handbook",
+  "name": "irpwm",
+  "productName": "IRPWM",
+  "version": "2.0.0",
+  "description": "Indian Railways Permanent Way Manual — 2024 reprint incorporating ACS up to No. 16",
+  "author": "IRPWM Digital Edition",
   "license": "UNLICENSED",
   "private": true,
   "main": "electron/main.js",
   "scripts": {
     "start": "electron .",
-    "build:win": "electron-builder --win --publish never",
-    "android:add": "cap add android",
-    "android:sync": "cap sync android"
+    "build:win": "electron-builder --win --publish never"
   },
   "dependencies": {
     "@capacitor/android": "7.6.9",
+    "@capacitor/app": "7.1.0",
     "@capacitor/core": "7.6.9"
   },
   "devDependencies": {
@@ -25,7 +24,8 @@
   },
   "build": {
     "appId": "in.irpwm.handbook",
-    "productName": "IRPWM Handbook",
+    "productName": "IRPWM",
+    "copyright": "Indian Railways Permanent Way Manual, 2024 reprint",
     "files": ["electron/**", "www/**", "build/icon.png", "package.json"],
     "directories": { "output": "dist", "buildResources": "build" },
     "win": {
@@ -37,9 +37,11 @@
       "perMachine": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
-      "shortcutName": "IRPWM Handbook",
-      "artifactName": "IRPWM-Handbook-Setup.${ext}"
+      "createStartMenuShortcut": true,
+      "shortcutName": "IRPWM - Permanent Way Manual",
+      "uninstallDisplayName": "IRPWM - Indian Railways Permanent Way Manual",
+      "artifactName": "IRPWM-Windows-Setup.${ext}"
     },
-    "portable": { "artifactName": "IRPWM-Handbook-Portable.${ext}" }
+    "portable": { "artifactName": "IRPWM-Windows-Portable.${ext}" }
   }
 }
