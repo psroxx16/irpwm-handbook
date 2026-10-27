@@ -22,12 +22,13 @@ jobs:
       sha: ${{ steps.done.outputs.sha }}
     steps:
       - uses: actions/checkout@v4
-      - name: Unpack app-source.zip
+      - name: Unpack the uploaded app source zip
         run: |
-          if [ -f app-source.zip ]; then
-            git rm -r -q --ignore-unmatch www electron assets build android-signing make.py src-install.html capacitor.config.json package.json
-            unzip -o -q app-source.zip
-            git rm -q app-source.zip
+          Z=$(ls *app-source*.zip 2>/dev/null | head -1)
+          if [ -n "$Z" ]; then
+            cp "$Z" /tmp/src.zip
+            git rm -r -q --ignore-unmatch www electron assets build android-signing make.py src-install.html capacitor.config.json package.json "$Z"
+            unzip -o -q /tmp/src.zip
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add -A
