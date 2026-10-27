@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17212B">
+<title>Install IRPWM Handbook</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/favicon-64.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+@font-face{font-family:"Barlow Condensed";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/barlow-condensed-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow Condensed";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/barlow-condensed-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow Condensed";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/barlow-condensed-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/ibm-plex-sans-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-sans-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/ibm-plex-sans-latin-600-normal.woff2) format("woff2")}
+
+:root{--bg:#F2F4F0;--surface:#FFFFFF;--ink:#17212B;--muted:#55626C;--line:#D2D9D3;--head:#17212B;--head-ink:#F2F4F0;--signal:#F2C02E;--signal-ink:#1A1A12;--accent:#0E5A6E;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;--f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;color-scheme:light}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0F1519;--surface:#172026;--ink:#E4EAEE;--muted:#9AA8B1;--line:#2A363E;--head:#0A0F12;--head-ink:#E4EAEE;--accent:#6CC3D6;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1519;--surface:#172026;--ink:#E4EAEE;--muted:#9AA8B1;--line:#2A363E;--head:#0A0F12;--head-ink:#E4EAEE;--accent:#6CC3D6;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 var(--f-body)}
+header{background:var(--head);color:var(--head-ink);padding:calc(14px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 14px max(16px,env(safe-area-inset-left,0px));display:flex;align-items:center;gap:12px;border-bottom:6px dashed var(--signal)}
+header a{color:inherit;text-decoration:none;display:flex;align-items:center;gap:10px}
+header b{font:700 24px/1 var(--f-display);letter-spacing:.03em;text-transform:uppercase}
+main{max-width:860px;margin:0 auto;padding:28px max(16px,env(safe-area-inset-right,0px)) 60px max(16px,env(safe-area-inset-left,0px))}
+h1{font:700 clamp(30px,6vw,44px)/1.05 var(--f-display);margin:0 0 6px;text-transform:uppercase;letter-spacing:.01em}
+.lead{color:var(--muted);margin:0 0 26px;max-width:62ch}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px}
+.card.mine{outline:3px solid var(--signal);outline-offset:-1px}
+.card h2{font:700 24px/1 var(--f-display);text-transform:uppercase;letter-spacing:.02em;margin:0;display:flex;align-items:center;gap:10px}
+.card h2 small{font:500 11px/1 var(--f-mono);letter-spacing:.08em;background:var(--signal);color:var(--signal-ink);padding:4px 6px;border-radius:3px}
+ol{margin:0;padding-left:20px}
+li{margin:3px 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:600;border-radius:8px;padding:11px 14px;border:0;cursor:pointer;font-size:15px}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn[hidden]{display:none}
+.note{font-size:13px;color:var(--muted);margin:0}
+.or{font:500 11px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.back{display:inline-block;margin-top:26px;color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<header><a href="./#home"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect x="1" y="1" width="32" height="32" rx="4" fill="#F2C02E"/><path d="M11 4v26M23 4v26" stroke="#17212B" stroke-width="2.6"/><path d="M7 9h20M7 15h20M7 21h20M7 27h20" stroke="#17212B" stroke-width="2.2"/></svg><b>IRPWM Handbook</b></a></header>
+<main>
+<h1>Install the app</h1>
+<p class="lead">The handbook installs like a normal app on your phone or PC, with its own icon, and works fully offline after the first open. Pick your device.</p>
+<div class="grid">
+  <section class="card" id="android">
+    <h2>Android <small id="tag-android" hidden>This device</small></h2>
+    <button class="btn" id="pwa-android" hidden>Install now</button>
+    <ol><li>Open this page in <b>Chrome</b>.</li><li>Tap <b>⋮</b> → <b>Install app</b> (or <b>Add to Home screen</b>).</li></ol>
+    <div class="or">or download the APK</div>
+    <a class="btn alt dl" data-file="IRPWM-Handbook.apk" href="#">Download Android app (.apk)</a>
+    <p class="note">Open the downloaded file and allow “Install unknown apps” for your browser when Android asks.</p>
+  </section>
+  <section class="card" id="ios">
+    <h2>iPhone / iPad <small id="tag-ios" hidden>This device</small></h2>
+    <ol><li>Open this page in <b>Safari</b>.</li><li>Tap the <b>Share</b> button (square with arrow).</li><li>Choose <b>Add to Home Screen</b> → <b>Add</b>.</li></ol>
+    <p class="note">It then opens full-screen from its own icon and works offline. Apple only allows other app installs through the App Store.</p>
+  </section>
+  <section class="card" id="windows">
+    <h2>Windows <small id="tag-windows" hidden>This device</small></h2>
+    <button class="btn" id="pwa-windows" hidden>Install now</button>
+    <ol><li>Open this page in <b>Edge</b> or <b>Chrome</b>.</li><li>Click the <b>Install</b> icon at the right end of the address bar.</li></ol>
+    <div class="or">or download the installer</div>
+    <a class="btn alt dl" data-file="IRPWM-Handbook-Setup.exe" href="#">Download Windows installer (.exe)</a>
+    <a class="btn alt dl" data-file="IRPWM-Handbook-Portable.exe" href="#">Portable version (no install)</a>
+    <p class="note">If Windows SmartScreen shows “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b> (the installer is not code-signed).</p>
+  </section>
+</div>
+<a class="back" href="./#home">← Back to the handbook</a>
+</main>
+<script>
+(function(){
+  // Release download links: https://github.com/<owner>/<repo>/releases/latest/download/<file>
+  var owner = location.hostname.endsWith('.github.io') ? location.hostname.split('.')[0] : '';
+  var repo = location.pathname.split('/').filter(Boolean)[0] || 'irpwm-handbook';
+  document.querySelectorAll('.dl').forEach(function(a){
+    a.href = owner ? 'https://github.com/' + owner + '/' + repo + '/releases/latest/download/' + a.dataset.file : '#';
+    if (!owner) a.hidden = true;
+  });
+  if (!owner) document.querySelectorAll('.or').forEach(function(e){ e.hidden = true; });
+  var ua = navigator.userAgent, plat = /android/i.test(ua) ? 'android' : (/iphone|ipad|ipod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) ? 'ios' : /windows/i.test(ua) ? 'windows' : '';
+  if (plat) { document.getElementById('tag-' + plat).hidden = false; var c = document.getElementById(plat); c.classList.add('mine'); c.parentNode.prepend(c); }
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault(); deferred = e;
+    ['pwa-android','pwa-windows'].forEach(function(id){ document.getElementById(id).hidden = false; });
+  });
+  ['pwa-android','pwa-windows'].forEach(function(id){
+    document.getElementById(id).addEventListener('click', function(){ if (deferred) { deferred.prompt(); deferred = null; } });
+  });
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(function(){});
+})();
+</script>
+</body>
+</html>
